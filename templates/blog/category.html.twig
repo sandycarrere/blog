@@ -1,0 +1,22 @@
+{# templates/blog/show.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ category.name }}{% endblock %}
+
+{% block stylesheets %}{% endblock %}
+
+{% block body %}
+    <h2>Category : {{ category.name }}</h2>
+    {% for article in articles %}
+        <div>
+            <h3>{{ article.id }}</h3>
+            <h3>{{ article.title }}</h3>
+            <p>{{ article.content }}</p>
+        </div>
+        <hr/>
+    {% endfor %}
+    <a href="{{ path('app_index') }}">
+        Back to homepage.
+    </a>
+
+{% endblock %}

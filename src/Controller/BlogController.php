@@ -77,6 +77,8 @@ class BlogController extends AbstractController
      * @param Category $category
      * @return Response
      */
+    //récupération en 2 temps des articles d’une catégorie en utilisant l’appel à $category->getArticles().
+    //cad récupération des articles liés à la catégorie dont le nom est présent dans l'url.
     public function showByCategory(Category $category): Response
     {
         if (!$category) {

@@ -48,12 +48,12 @@ class BlogController extends AbstractController
         return $this->render('/blog/show.html.twig',['cleanSlug'=>$cleanSlug]);
     }
 
-   /**
+  /* /**
      * @Route("/category/{categoryName}",
      *          methods={"GET"},
      *          name="show_category")
-     */
-   public function showByCategory(string $categoryName) : Response
+     */ 
+ /* public function showByCategory(string $categoryName) : Response
     {
         if (!$categoryName) {
             throw $this
@@ -70,5 +70,20 @@ class BlogController extends AbstractController
             ->findByCategory($category,['id' => 'DESC'], $limit);
         return $this->render('/blog/category.html.twig', ['articles' => $articles,'category' => $category,]
         );
+    }*/
+
+          /**
+     * @Route("/category/{name}", name="show_category")
+     * @param Category $category
+     * @return Response
+     */
+    public function showByCategory(Category $category): Response
+    {
+        if (!$category) {
+            throw $this
+                ->createNotFoundException('No category has been sent to find a category in article\'s table.');
+        }
+        $articles = $category->getArticles();
+        return $this->render('blog/category.html.twig', ['articles' => $articles, 'category' => $category]);
     }
 }

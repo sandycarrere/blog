@@ -1,11 +1,15 @@
 <?php
 // src/Controller/BlogController.php
 namespace App\Controller;
+
 use App\Entity\Article;
 use App\Entity\Category;
+use App\Form\ArticleSearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+
 /**
  * @Route("/blog", name="blog_")
 */
@@ -29,10 +33,21 @@ class BlogController extends AbstractController
           );
       }
 
-      return $this->render(
-              '/blog/index.html.twig',
-              ['articles' => $articles]
+      $form = $this->createForm(
+        ArticleSearchType::class,
+        null,
+        ['method' => Request::METHOD_GET]
       );
+
+      return $this->render(
+              'blog/index.html.twig',
+              ['articles' => $articles,
+              'form' => $form->createView(),
+            ]
+        );     
+        
+
+    
 }
     /**
      * @Route("/show/{slug}",
